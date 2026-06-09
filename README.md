@@ -1,10 +1,10 @@
-# 🌳 branchy
+# 🌳 Branchy
 
 > **"Conversations are trees, not lists."**
 
-branchy reimplements the chat interface as a **Directed Acyclic Graph (DAG)**. Unlike standard linear chatbots, branchy allows you to **fork** any message into a new branch, explore parallel ideas, and **merge** valuable insights back into the main thread—just like Git, but for thinking.
+Branchy reimplements the chat interface as a **Directed Acyclic Graph (DAG)**. Unlike standard linear chatbots, branchy allows you to **fork** any message into a new branch, explore parallel ideas, and **merge** valuable insights back into the main thread—just like Git, but for thinking.
 
-Made with ❤️ by **[hrshya](https://hrshya.vercel.app)**
+Made with ❤️ by **[Hrshya](https://hrshya.vercel.app)**
 
 ## ✨ Key Features
 
