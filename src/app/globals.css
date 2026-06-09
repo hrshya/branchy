@@ -1,0 +1,379 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+}
+
+:root {
+  /* Earthy Light Mode (Sand / warm paper) */
+  --background: #fdfbf7;
+  --foreground: #2d3748;
+
+  --muted: #f4f1ea;
+  --muted-foreground: #718096;
+
+  --border: #e2e0d5;
+  --primary: #4a7c59;
+  /* Sage/Forest Green */
+  --primary-foreground: #ffffff;
+
+  --secondary: #eeeae0;
+  --secondary-foreground: #2d3748;
+
+  --sidebar: #f7f4ec;
+  --sidebar-foreground: #2d3748;
+  --sidebar-border: #e2e0d5;
+
+  /* Matte Finish Variables - ORGANIC */
+  --matte-bg: #fdfbf7;
+  --matte-shadow: rgba(85, 95, 80, 0.08);
+  /* Organic shadow hue */
+  --matte-border: #e2e0d5;
+
+  /* Textures */
+  --noise: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+.dark {
+  /* Earthy Dark Mode (Deep bark / forest shadow) */
+  --background: #1a1c19;
+  --foreground: #e2e8f0;
+
+  --muted: #272a25;
+  --muted-foreground: #a0aec0;
+
+  --border: #383c34;
+  --primary: #5c916e;
+  /* Lighter sage for contrast */
+  --primary-foreground: #ffffff;
+
+  --secondary: #272a25;
+  --secondary-foreground: #e2e8f0;
+
+  --sidebar: #161815;
+  --sidebar-foreground: #e2e8f0;
+  --sidebar-border: #383c34;
+
+  --matte-bg: #1e211d;
+  --matte-shadow: rgba(0, 0, 0, 0.5);
+  --matte-border: #383c34;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-none;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased relative min-h-screen font-sans;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  /* Fixed Textures - Background Layer (Paper/Dirt texture) */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: var(--noise);
+    opacity: 0.05;
+    pointer-events: none;
+    z-index: -1;
+    mix-blend-mode: multiply;
+  }
+
+  .dark body::before {
+    mix-blend-mode: overlay;
+    opacity: 0.03;
+  }
+
+  /* Soft organic dot pattern instead of harsh tech grid */
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image: radial-gradient(rgba(74, 124, 89, 0.1) 1px, transparent 1px);
+    background-size: 24px 24px;
+    opacity: 0.6;
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  .dark body::after {
+    background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    opacity: 1;
+  }
+}
+
+@layer utilities {
+  .glass {
+    @apply bg-background/60 backdrop-blur-xl border border-border/50 shadow-sm;
+  }
+
+  .glass-card {
+    @apply bg-background/90 backdrop-blur-2xl border border-border shadow-lg rounded-2xl;
+  }
+
+  .glass-panel {
+    @apply bg-white/50 dark:bg-black/70 backdrop-blur-[80px] border-r border-border/40;
+  }
+
+  .btn-3d {
+    @apply relative transition-all duration-100 active:translate-y-[2px] active:shadow-none;
+    box-shadow: 0 4px 0 0 var(--border);
+    border: 1px solid var(--border);
+  }
+
+  .btn-3d-primary {
+    @apply relative transition-all duration-100 active:translate-y-[2px] active:shadow-none bg-primary text-primary-foreground;
+    box-shadow: 0 4px 0 0 rgba(0, 0, 0, 0.2);
+  }
+
+  .matte {
+    background-color: var(--matte-bg);
+    border: 1px solid var(--matte-border);
+    box-shadow: 0 1px 3px var(--matte-shadow);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .matte::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    opacity: 0.04;
+    pointer-events: none;
+    background-image: var(--noise);
+    z-index: 1;
+  }
+
+  .matte>* {
+    position: relative;
+    z-index: 2;
+  }
+
+  .silk {
+    @apply bg-white/80 dark:bg-zinc-950/80 backdrop-blur-2xl border border-border/50 shadow-sm;
+  }
+
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-br from-slate-900 via-slate-500 to-slate-900 dark:from-white dark:via-slate-400 dark:to-slate-200;
+  }
+
+  .glossy-button {
+    @apply relative overflow-hidden transition-all duration-300 active:scale-95;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .glossy-button::after {
+    content: "";
+    @apply absolute inset-0 opacity-0 transition-opacity duration-300;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), transparent);
+  }
+
+  .glossy-button:hover::after {
+    @apply opacity-100;
+  }
+
+  .technical-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+  }
+
+  .technical-scroll::-webkit-scrollbar {
+    width: 3px;
+    height: 3px;
+  }
+
+  .technical-scroll::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .technical-scroll::-webkit-scrollbar-thumb {
+    @apply bg-border/40 rounded-full transition-colors hover:bg-border/70;
+  }
+
+  /* Global minimalist scrollbar for all overflow elements */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 0, 0, 0.1) transparent;
+  }
+
+  .dark * {
+    scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
+  }
+
+  *::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+  }
+
+  .dark *::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+}
+
+/* Prose Typography Styles - for markdown rendering */
+.prose {
+  @apply text-foreground leading-relaxed;
+  font-size: 1rem;
+}
+
+.prose strong,
+.prose b {
+  @apply font-bold text-slate-900 dark:text-slate-100;
+}
+
+.prose em,
+.prose i {
+  @apply italic;
+}
+
+.prose h1 {
+  @apply text-xl md:text-2xl font-bold mt-6 mb-4 text-slate-900 dark:text-slate-100;
+}
+
+.prose h2 {
+  @apply text-lg md:text-xl font-semibold mt-5 mb-3 text-slate-900 dark:text-slate-100;
+}
+
+.prose h3 {
+  @apply text-base md:text-lg font-semibold mt-4 mb-2 text-slate-900 dark:text-slate-100;
+}
+
+.prose p {
+  @apply mb-4;
+}
+
+.prose ul {
+  @apply list-disc list-inside mb-4 space-y-1.5;
+}
+
+.prose ol {
+  @apply list-decimal list-inside mb-4 space-y-1.5;
+}
+
+.prose li {
+  @apply pl-1;
+}
+
+.prose li>ul,
+.prose li>ol {
+  @apply ml-5 mt-1.5;
+}
+
+.prose code:not(pre code) {
+  @apply px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-sm font-mono text-slate-800 dark:text-slate-200;
+}
+
+.prose pre {
+  @apply rounded-lg bg-slate-100 dark:bg-slate-800/80 p-4 mb-4 overflow-x-auto;
+}
+
+.prose pre code {
+  @apply bg-transparent p-0 text-sm;
+}
+
+.prose blockquote {
+  @apply border-l-4 border-slate-300 dark:border-slate-600 pl-4 italic text-muted-foreground my-4;
+}
+
+.prose a {
+  @apply text-blue-600 dark:text-blue-400 underline underline-offset-2 hover:text-blue-800 dark:hover:text-blue-300;
+}
+
+.prose hr {
+  @apply my-6 border-border;
+}
+
+.prose table {
+  @apply w-full border-collapse mb-4;
+}
+
+.prose th,
+.prose td {
+  @apply border border-border px-3 py-2 text-left;
+}
+
+.prose th {
+  @apply bg-muted font-semibold;
+}
+
+/* Inverted prose for user messages with dark backgrounds */
+.prose-invert {
+  @apply text-white/90;
+}
+
+.prose-invert strong,
+.prose-invert b {
+  @apply font-bold text-white;
+}
+
+.prose-invert code:not(pre code) {
+  @apply bg-white/20 text-white;
+}
+
+.prose-invert a {
+  @apply text-blue-300 hover:text-blue-200;
+}
+
+.prose-invert blockquote {
+  @apply border-white/30 text-white/70;
+}
+
+/* Base Overrides */
+input,
+textarea,
+button {
+  @apply font-sans;
+}
+
+code,
+kbd,
+pre,
+samp {
+  @apply font-mono;
+}

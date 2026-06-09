@@ -1,0 +1,24 @@
+# Docker Compose for branchy local development
+# Run: docker compose up -d
+
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: branchy-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: branchy
+      POSTGRES_PASSWORD: branchy_secret
+      POSTGRES_DB: branchy
+    ports:
+      - "5432:5432"
+    volumes:
+      - branchy_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U branchy -d branchy"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  branchy_data:
